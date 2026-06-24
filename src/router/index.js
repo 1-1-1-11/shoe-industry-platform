@@ -24,31 +24,31 @@ const router = createRouter({
           path: 'dashboard',
           name: 'dashboard',
           component: () => import('../views/DashboardView.vue'),
-          meta: { title: '经营概览', subtitle: '生产、质量、交付指标集中看板' },
+          meta: { title: '经营概览', subtitle: '生产、质量、交付指标集中看板', roles: ['admin'] },
         },
         {
           path: 'manufacturing',
           name: 'manufacturing',
           component: () => import('../views/ManufacturingView.vue'),
-          meta: { title: '制造清单', subtitle: '制造任务 CRUD 与进度追踪' },
+          meta: { title: '制造清单', subtitle: '制造任务 CRUD 与进度追踪', roles: ['admin'] },
         },
         {
           path: 'manufacturing/:id',
           name: 'manufacturing-detail',
           component: () => import('../views/TaskDetailView.vue'),
-          meta: { title: '任务详情', subtitle: '动态路由参数匹配示例' },
+          meta: { title: '任务详情', subtitle: '动态路由参数匹配示例', roles: ['admin'] },
         },
         {
           path: 'quality',
           name: 'quality',
           component: () => import('../views/QualityView.vue'),
-          meta: { title: '质量管理', subtitle: '质检批次与异常闭环' },
+          meta: { title: '质量管理', subtitle: '质检批次与异常闭环', roles: ['admin'] },
         },
         {
           path: 'inventory',
           name: 'inventory',
           component: () => import('../views/InventoryView.vue'),
-          meta: { title: '仓储物料', subtitle: '关键物料库存与风险预警' },
+          meta: { title: '仓储物料', subtitle: '关键物料库存与风险预警', roles: ['admin'] },
         },
       ],
     },
@@ -59,6 +59,9 @@ router.beforeEach((to) => {
   const auth = useAuthStore()
   if (to.meta.requiresAuth && !auth.isAuthed) {
     return { path: '/login', query: { redirect: to.fullPath } }
+  }
+  if (to.meta.roles?.length && !to.meta.roles.includes(auth.role)) {
+    return '/app/dashboard'
   }
   if (to.name === 'login' && auth.isAuthed) return '/app/dashboard'
 })

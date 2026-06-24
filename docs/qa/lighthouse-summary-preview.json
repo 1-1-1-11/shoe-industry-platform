@@ -1,0 +1,20 @@
+{
+  "lighthouseVersion": "13.4.0",
+  "requestedUrl": "http://localhost:4173/login",
+  "finalDisplayedUrl": "http://localhost:4173/login",
+  "fetchTime": "2026-06-24T03:55:08.614Z",
+  "categories": {
+    "performance": 0.94,
+    "accessibility": 0.95,
+    "best-practices": 1,
+    "seo": 0.82,
+    "agentic-browsing": 0.67
+  },
+  "metrics": {
+    "firstContentfulPaint": "2.3 s",
+    "largestContentfulPaint": "2.6 s",
+    "totalBlockingTime": "10 ms",
+    "cumulativeLayoutShift": "0",
+    "speedIndex": "2.3 s"
+  }
+}

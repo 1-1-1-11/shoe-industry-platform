@@ -3,11 +3,13 @@ import { reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useAuthStore } from '../stores/auth'
+import { usePageMotion } from '../composables/usePageMotion'
 
 const router = useRouter()
 const route = useRoute()
 const auth = useAuthStore()
 const formRef = ref()
+const motionRoot = ref()
 const loading = ref(false)
 const form = reactive({ username: 'admin', password: '123456', remember: true })
 
@@ -31,10 +33,26 @@ const submit = async () => {
     loading.value = false
   }
 }
+
+usePageMotion(motionRoot, ({ gsap, reduceMotion }) => {
+  if (reduceMotion) return
+
+  const tl = gsap.timeline({ defaults: { duration: 0.72, ease: 'power3.out' } })
+  tl.from('.factory-grid span', {
+    autoAlpha: 0,
+    y: 22,
+    scale: 0.45,
+    rotation: () => gsap.utils.random(-18, 18),
+    stagger: { amount: 0.52, from: 'random' },
+  })
+    .from('.login-hero h1', { autoAlpha: 0, y: 36, scale: 0.96 }, '-=0.24')
+    .from('.login-hero p, .login-hero li', { autoAlpha: 0, x: -20, stagger: 0.08 }, '-=0.28')
+    .from('.login-card', { autoAlpha: 0, y: 34, scale: 0.94, rotationX: -7, transformOrigin: '50% 100%', duration: 0.66 }, '-=0.36')
+})
 </script>
 
 <template>
-  <main class="login-page">
+  <main ref="motionRoot" class="login-page">
     <section class="login-hero">
       <div class="factory-grid">
         <span v-for="i in 18" :key="i"></span>

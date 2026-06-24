@@ -1,11 +1,13 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useManufacturingStore } from '../stores/manufacturing'
 import ProductionChart from '../components/ProductionChart.vue'
+import { usePageMotion } from '../composables/usePageMotion'
 
 const store = useManufacturingStore()
 const { products, loading, usingMock } = storeToRefs(store)
+const dashboardRef = ref()
 
 const cards = computed(() => [
   { label: '制造任务', value: store.total, suffix: '项' },
@@ -23,10 +25,31 @@ const urgent = computed(() =>
 onMounted(() => {
   store.loadProducts()
 })
+
+usePageMotion(dashboardRef, ({ gsap, reduceMotion }) => {
+  if (reduceMotion) return
+
+  gsap.from('.metric-card', {
+    autoAlpha: 0,
+    y: 18,
+    scale: 0.98,
+    duration: 0.5,
+    ease: 'power3.out',
+    stagger: 0.08,
+  })
+  gsap.from('.dashboard-grid .panel', {
+    autoAlpha: 0,
+    y: 20,
+    duration: 0.52,
+    ease: 'power3.out',
+    stagger: 0.1,
+    delay: 0.18,
+  })
+})
 </script>
 
 <template>
-  <div v-loading="loading" class="dashboard">
+  <div ref="dashboardRef" v-loading="loading" class="dashboard">
     <el-alert
       v-if="usingMock"
       title="当前仅运行前端，系统已自动使用 localStorage 种子数据；执行 pnpm start 可启用 JSON Server 持久化。"

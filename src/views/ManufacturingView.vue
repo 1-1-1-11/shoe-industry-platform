@@ -98,7 +98,13 @@ onMounted(() => {
         :page-size="pageSize"
       />
     </div>
-    <el-dialog v-model="dialogVisible" :title="editing ? '编辑制造任务' : '新增制造任务'" width="760px">
+    <el-dialog
+      v-model="dialogVisible"
+      :title="editing ? '编辑制造任务' : '新增制造任务'"
+      width="760px"
+      class="task-dialog"
+      destroy-on-close
+    >
       <TaskForm :model-value="editing || undefined" @submit="saveTask" @cancel="dialogVisible = false" />
     </el-dialog>
   </div>

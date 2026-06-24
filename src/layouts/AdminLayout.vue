@@ -1,12 +1,15 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { gsap } from 'gsap'
 import { useAuthStore } from '../stores/auth'
+import { usePageMotion } from '../composables/usePageMotion'
 import { Monitor, Box, Goods, Checked, Fold } from '@element-plus/icons-vue'
 
 const route = useRoute()
 const router = useRouter()
 const auth = useAuthStore()
+const shellRef = ref()
 
 const menu = [
   { path: '/app/dashboard', label: '经营概览', icon: Monitor },
@@ -22,10 +25,38 @@ const logout = () => {
   auth.logout()
   router.push('/login')
 }
+
+usePageMotion(shellRef, ({ gsap, reduceMotion }) => {
+  if (reduceMotion) return
+
+  const tl = gsap.timeline({ defaults: { duration: 0.62, ease: 'power3.out' } })
+  tl.from('.sidebar', { autoAlpha: 0, x: -34 })
+    .from('.brand-mark', { autoAlpha: 0, scale: 0.5, rotation: -18, ease: 'back.out(1.8)' }, '-=0.3')
+    .from('.brand strong, .brand small', { autoAlpha: 0, x: -12, stagger: 0.04 }, '-=0.35')
+    .from('.side-menu .el-menu-item', { autoAlpha: 0, x: -22, scale: 0.96, stagger: 0.07 }, '-=0.18')
+    .from('.topbar > *', { autoAlpha: 0, y: -16, stagger: 0.08 }, '-=0.28')
+    .from('.content-panel', { autoAlpha: 0, y: 24, scale: 0.985 }, '-=0.2')
+})
+
+watch(
+  () => route.fullPath,
+  async () => {
+    await nextTick()
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const page = shellRef.value?.querySelector('.content-panel > *')
+    if (!page) return
+    gsap.fromTo(
+      page,
+      { autoAlpha: 0, y: 22, scale: 0.985, rotationX: -4, transformOrigin: '50% 0%' },
+      { autoAlpha: 1, y: 0, scale: 1, rotationX: 0, duration: 0.46, ease: 'power3.out', overwrite: 'auto' },
+    )
+  },
+)
 </script>
 
 <template>
-  <div class="admin-shell">
+  <div ref="shellRef" class="admin-shell">
     <aside class="sidebar">
       <div class="brand">
         <span class="brand-mark">WZ</span>

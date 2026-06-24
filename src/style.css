@@ -1,14 +1,16 @@
 :root {
-  color: #102033;
-  background: #eef3f8;
+  color: #1f2520;
+  background: #f0eee8;
   font-family: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
-  --ink: #102033;
-  --muted: #6a7788;
-  --line: #dbe4ef;
-  --brand: #1d4ed8;
-  --teal: #0f766e;
+  --ink: #1f2520;
+  --muted: #6f746b;
+  --line: #ded8cc;
+  --brand: #8a3f1d;
+  --brand-dark: #4b2619;
+  --teal: #28766b;
+  --amber: #c58b2c;
   --surface: #ffffff;
-  --soft: #f7fafc;
+  --soft: #f7f3ec;
 }
 
 * {
@@ -34,7 +36,8 @@ input {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(360px, 480px);
   background:
-    linear-gradient(135deg, rgba(16, 32, 51, 0.92), rgba(12, 79, 91, 0.86)),
+    radial-gradient(circle at 14% 18%, rgba(197, 139, 44, 0.28), transparent 28%),
+    linear-gradient(135deg, rgba(31, 37, 32, 0.94), rgba(75, 38, 25, 0.88)),
     url("./assets/hero.png") center/cover;
 }
 
@@ -56,7 +59,8 @@ input {
 .factory-grid span {
   aspect-ratio: 1;
   border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.06);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.11), rgba(197, 139, 44, 0.16));
+  will-change: transform, opacity;
 }
 
 .login-hero h1 {
@@ -64,6 +68,7 @@ input {
   margin: 0 0 18px;
   font-size: 52px;
   line-height: 1.12;
+  letter-spacing: 0;
 }
 
 .login-hero p,
@@ -79,8 +84,10 @@ input {
   margin-right: 56px;
   padding: 40px;
   border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 24px 70px rgba(8, 20, 36, 0.28);
+  border: 1px solid rgba(138, 63, 29, 0.14);
+  background: rgba(255, 252, 246, 0.96);
+  box-shadow: 0 24px 70px rgba(31, 37, 32, 0.26);
+  will-change: transform, opacity;
 }
 
 .login-card h2 {
@@ -102,12 +109,15 @@ input {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 248px minmax(0, 1fr);
-  background: #e9eff6;
+  background:
+    linear-gradient(90deg, rgba(75, 38, 25, 0.05), transparent 38%),
+    #f0eee8;
 }
 
 .sidebar {
-  color: #dce9f8;
-  background: #0b1727;
+  color: #f6ead9;
+  background:
+    linear-gradient(180deg, #2a211c 0%, #4b2619 58%, #1f2520 100%);
   padding: 22px 16px;
 }
 
@@ -124,7 +134,8 @@ input {
   width: 42px;
   height: 42px;
   border-radius: 8px;
-  background: #1d4ed8;
+  background: linear-gradient(135deg, var(--amber), var(--brand));
+  color: #fff9ef;
   font-weight: 800;
 }
 
@@ -135,7 +146,7 @@ input {
 
 .brand small {
   margin-top: 4px;
-  color: #8fa4bd;
+  color: #d6bfa1;
 }
 
 .side-menu {
@@ -146,19 +157,21 @@ input {
 .side-menu .el-menu-item {
   height: 46px;
   border-radius: 8px;
-  color: #b8c8da;
+  color: #e0cfb7;
+  will-change: transform, opacity;
 }
 
 .side-menu .el-menu-item.is-active,
 .side-menu .el-menu-item:hover {
-  color: #fff;
-  background: rgba(37, 99, 235, 0.22);
+  color: #fff8ec;
+  background: rgba(197, 139, 44, 0.24);
 }
 
 .main-panel {
   min-width: 0;
   display: flex;
   flex-direction: column;
+  perspective: 1200px;
 }
 
 .topbar {
@@ -168,13 +181,14 @@ input {
   justify-content: space-between;
   gap: 20px;
   padding: 24px 32px;
-  background: #fff;
+  background: rgba(255, 252, 246, 0.92);
   border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
 }
 
 .section-label {
   margin: 0 0 4px;
-  color: var(--teal);
+  color: var(--brand);
   font-weight: 700;
 }
 
@@ -195,6 +209,7 @@ input {
 
 .content-panel {
   padding: 28px 32px 44px;
+  transform-style: preserve-3d;
 }
 
 .metric-grid {
@@ -212,11 +227,23 @@ input {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+  box-shadow: 0 12px 28px rgba(75, 38, 25, 0.07);
 }
 
 .metric-card {
   padding: 22px;
+  border-top: 3px solid rgba(197, 139, 44, 0.8);
+  background:
+    linear-gradient(180deg, rgba(255, 250, 242, 0.92), #fff);
+  will-change: transform, opacity;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.metric-card:hover,
+.material-card:hover,
+.panel:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 34px rgba(75, 38, 25, 0.12);
 }
 
 .metric-card span,
@@ -230,6 +257,7 @@ input {
 .metric-card strong {
   display: block;
   margin-top: 10px;
+  color: var(--brand-dark);
   font-size: 34px;
 }
 
@@ -241,6 +269,7 @@ input {
 
 .panel {
   padding: 22px;
+  will-change: transform, opacity;
 }
 
 .panel-head {
@@ -279,6 +308,7 @@ input {
   gap: 14px;
   padding: 14px;
   border-radius: 8px;
+  border-left: 3px solid rgba(40, 118, 107, 0.55);
   background: var(--soft);
 }
 
@@ -377,6 +407,165 @@ input {
   gap: 16px;
 }
 
+.task-dialog {
+  max-width: calc(100vw - 32px);
+  margin: 5vh auto !important;
+}
+
+.task-dialog .el-dialog__body {
+  max-height: calc(90vh - 118px);
+  overflow-y: auto;
+  padding-bottom: 0;
+  scrollbar-gutter: stable;
+}
+
+.task-form {
+  padding-right: 4px;
+}
+
+.task-form .el-input-number {
+  width: 100%;
+}
+
+.task-form .form-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  margin: 6px -4px 0;
+  padding: 14px 4px 2px;
+  border-top: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), #fff 42%);
+}
+
+.inventory-page {
+  display: grid;
+  gap: 18px;
+}
+
+.inventory-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px;
+  border: 1px solid rgba(197, 139, 44, 0.38);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(75, 38, 25, 0.92), rgba(31, 37, 32, 0.88)),
+    radial-gradient(circle at 88% 20%, rgba(197, 139, 44, 0.34), transparent 34%);
+  color: #fff8ec;
+  box-shadow: 0 18px 42px rgba(75, 38, 25, 0.18);
+  will-change: transform, opacity;
+}
+
+.inventory-hero .section-label {
+  color: #f3c15f;
+}
+
+.inventory-hero h2 {
+  margin: 4px 0 8px;
+  font-size: 28px;
+}
+
+.inventory-hero span {
+  color: rgba(255, 248, 236, 0.78);
+}
+
+.inventory-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.inventory-kpi {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(75, 38, 25, 0.07);
+  will-change: transform, opacity;
+}
+
+.inventory-kpi span,
+.material-meta span,
+.movement-list small {
+  color: var(--muted);
+}
+
+.inventory-kpi strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--brand-dark);
+  font-size: 28px;
+}
+
+.inventory-kpi.warning {
+  border-color: rgba(190, 74, 58, 0.36);
+  background: #fff7f3;
+}
+
+.material-card.warning {
+  border-color: rgba(190, 74, 58, 0.34);
+}
+
+.material-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.material-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  font-size: 13px;
+}
+
+.inventory-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 18px;
+}
+
+.inventory-panel {
+  min-height: 260px;
+  will-change: transform, opacity;
+}
+
+.risk-list,
+.movement-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.risk-list li,
+.movement-list li {
+  display: grid;
+  align-items: center;
+  gap: 6px 12px;
+  padding: 13px 14px;
+  border-radius: 8px;
+  background: var(--soft);
+}
+
+.risk-list li {
+  grid-template-columns: minmax(120px, 1fr) minmax(160px, 1.5fr) auto;
+  border-left: 3px solid #be4a3a;
+}
+
+.movement-list li {
+  grid-template-columns: 58px 54px minmax(0, 1fr) minmax(110px, auto);
+  border-left: 3px solid var(--teal);
+}
+
+.movement-list time {
+  color: var(--brand);
+  font-weight: 700;
+}
+
 @media (max-width: 980px) {
   .login-page,
   .admin-shell {
@@ -413,11 +602,17 @@ input {
 
   .metric-grid,
   .dashboard-grid,
-  .detail-grid {
+  .detail-grid,
+  .inventory-kpis,
+  .inventory-bottom {
     grid-template-columns: 1fr;
   }
 
   .toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .material-meta {
     grid-template-columns: 1fr;
   }
 }
@@ -439,5 +634,18 @@ input {
 
   .el-dialog {
     width: calc(100vw - 24px) !important;
+  }
+
+  .task-dialog {
+    margin-top: 12px !important;
+  }
+
+  .task-dialog .el-dialog__body {
+    max-height: calc(100vh - 112px);
+  }
+
+  .risk-list li,
+  .movement-list li {
+    grid-template-columns: 1fr;
   }
 }

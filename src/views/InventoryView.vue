@@ -76,8 +76,10 @@ usePageMotion(inventoryRef, ({ gsap, reduceMotion }) => {
   gsap
     .timeline({ defaults: { duration: 0.54, ease: 'power3.out' } })
     .from('.inventory-hero, .inventory-kpi', { autoAlpha: 0, y: 22, scale: 0.98, stagger: 0.08 })
+    .from('.inventory-hero .el-tag', { autoAlpha: 0, x: 20, scale: 0.72, ease: 'back.out(1.8)' }, '-=0.36')
     .from('.material-card', { autoAlpha: 0, y: 24, rotationX: -8, transformOrigin: '50% 100%', stagger: 0.08 }, '-=0.2')
     .from('.inventory-panel', { autoAlpha: 0, y: 18, stagger: 0.08 }, '-=0.18')
+  gsap.to('.inventory-hero .el-tag', { scale: 1.08, duration: 0.28, repeat: 1, yoyo: true, delay: 0.75, ease: 'power2.inOut' })
 })
 </script>
 

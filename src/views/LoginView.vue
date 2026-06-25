@@ -38,34 +38,33 @@ usePageMotion(motionRoot, ({ gsap, reduceMotion }) => {
   if (reduceMotion) return
 
   const tl = gsap.timeline({ defaults: { duration: 0.72, ease: 'power3.out' } })
-  tl.from('.factory-grid span', {
-    autoAlpha: 0,
-    y: 22,
-    scale: 0.45,
-    rotation: () => gsap.utils.random(-18, 18),
-    stagger: { amount: 0.52, from: 'random' },
-  })
-    .from('.login-hero h1', { autoAlpha: 0, y: 36, scale: 0.96 }, '-=0.24')
-    .from('.login-hero p, .login-hero li', { autoAlpha: 0, x: -20, stagger: 0.08 }, '-=0.28')
-    .from('.login-card', { autoAlpha: 0, y: 34, scale: 0.94, rotationX: -7, transformOrigin: '50% 100%', duration: 0.66 }, '-=0.36')
+  tl.fromTo('.login-bg', { autoAlpha: 0, scale: 1.12, x: 34 }, { autoAlpha: 1, scale: 1, x: 0, duration: 1.05 })
+    .from('.login-eyebrow', { autoAlpha: 0, y: 16 }, '-=0.5')
+    .from('.login-hero h1', { autoAlpha: 0, y: 36, scale: 0.96 }, '-=0.46')
+    .from('.login-hero p, .login-stack span', { autoAlpha: 0, x: -20, stagger: 0.08 }, '-=0.28')
+    .from('.login-card', { autoAlpha: 0, y: 28, scale: 0.96, rotationY: -6, transformOrigin: '0% 50%', duration: 0.66 }, '-=0.3')
+    .from('.login-card .el-form-item, .login-submit', { autoAlpha: 0, y: 12, stagger: 0.06, duration: 0.32 }, '-=0.28')
+  gsap.to('.login-bg', { scale: 1.035, duration: 9, repeat: -1, yoyo: true, ease: 'sine.inOut' })
 })
 </script>
 
 <template>
   <main ref="motionRoot" class="login-page">
+    <div class="login-bg" aria-hidden="true"></div>
     <section class="login-hero">
-      <div class="factory-grid">
-        <span v-for="i in 18" :key="i"></span>
-      </div>
+      <p class="login-eyebrow">WENZHOU SHOE INDUSTRY</p>
       <h1>温州皮鞋工业制造平台</h1>
-      <p>面向鞋业工厂的生产任务、质量和仓储一体化管理后台。</p>
-      <ul>
-        <li>Vue 3 + Router 4 + Pinia</li>
-        <li>Element Plus 表单与表格</li>
-        <li>JSON Server REST 模拟接口</li>
-      </ul>
+      <p class="login-copy">把生产排产、质量检验、仓储预警放在同一个制造现场看板里。</p>
+      <div class="login-stack" aria-label="技术栈">
+        <span>Vue 3</span>
+        <span>Router 4</span>
+        <span>Pinia</span>
+        <span>Element Plus</span>
+        <span>JSON Server</span>
+      </div>
     </section>
     <section class="login-card">
+      <p class="login-card-kicker">MANUFACTURING CONSOLE</p>
       <h2>管理员登录</h2>
       <p>课堂演示账号：admin / 123456</p>
       <el-form ref="formRef" :model="form" :rules="rules" label-position="top">

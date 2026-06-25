@@ -3,6 +3,7 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
+import { gsap } from 'gsap'
 import { useManufacturingStore } from '../stores/manufacturing'
 import ManufacturingTable from '../components/ManufacturingTable.vue'
 import TaskForm from '../components/TaskForm.vue'
@@ -37,6 +38,24 @@ const openEdit = (row) => {
 
 const openDetail = (row) => {
   router.push(`/app/manufacturing/${row.id}`)
+}
+
+const animateDialog = () => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  const dialog = document.querySelector('.task-dialog.el-dialog, .task-dialog .el-dialog')
+  const fields = dialog?.querySelectorAll('.task-form .el-form-item, .form-actions')
+  if (!dialog || !fields?.length) return
+
+  gsap.fromTo(
+    dialog,
+    { autoAlpha: 0, y: 28, scale: 0.96, rotationX: -5, transformOrigin: '50% 0%' },
+    { autoAlpha: 1, y: 0, scale: 1, rotationX: 0, duration: 0.36, ease: 'power3.out', overwrite: 'auto' },
+  )
+  gsap.fromTo(
+    fields,
+    { autoAlpha: 0, y: 14 },
+    { autoAlpha: 1, y: 0, duration: 0.3, ease: 'power3.out', stagger: 0.025, delay: 0.08, overwrite: 'auto' },
+  )
 }
 
 const saveTask = async (payload) => {
@@ -104,6 +123,7 @@ onMounted(() => {
       width="760px"
       class="task-dialog"
       destroy-on-close
+      @opened="animateDialog"
     >
       <TaskForm :model-value="editing || undefined" @submit="saveTask" @cancel="dialogVisible = false" />
     </el-dialog>
